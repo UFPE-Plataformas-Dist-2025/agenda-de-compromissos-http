@@ -1,0 +1,25 @@
+{
+  "name": "pd-03-agenda-http",
+  "version": "1.0.0",
+  "main": "src/client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "repository": "https://bitbucket.org/ufpe-plataformas-dist-2025/pd-03-agenda-http.git",
+  "contributors": [
+    {
+      "name": "Samara Silvia",
+      "email": "samarasilvia.dev@gmail.com"
+    },
+    {
+      "name": "Rodolfo Marinho",
+      "email": "armc2@cin.ufpe.br"
+    }
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "eslint": "^9.36.0",
+    "globals": "^16.4.0"
+  }
+}
