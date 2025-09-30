@@ -21,8 +21,8 @@ pipelines:
         name: Mirror to GitHub
         script:
           - mkdir -p ~/.ssh
-          - echo "${SSH_KEY}" | base64 --decode > ~/.ssh/id_rsa
+          - echo "${SSH_KEY_ARMC}" | base64 --decode > ~/.ssh/id_rsa
           - chmod 600 ~/.ssh/id_rsa
           - ssh-keyscan github.com >> ~/.ssh/known_hosts
-          - git remote add github-mirror git@github.com:UFPE-Plataformas-Dist-2025/agenda-de-compromissos-socket-tcp.git
+          - git remote add github-mirror git@github.com:UFPE-Plataformas-Dist-2025/agenda-de-compromissos_http.git
           - git push --all github-mirror
