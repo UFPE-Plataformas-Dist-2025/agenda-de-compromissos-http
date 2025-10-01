@@ -9,14 +9,18 @@ pipelines:
               - node
             script:
               - yarn install
-              - yarn test
+              - yarn start:server &
+              - sleep 5
+              - yarn test:online
+            artifacts:
+              - test-report.html
         - step:
             name: Code Linting
             caches:
               - node
             script:
               - yarn install
-              - yarn eslint .
+              - yarn eslint . 
     - step:
         name: Mirror to GitHub
         script:
