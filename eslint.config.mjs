@@ -1,24 +1,26 @@
 import js from "@eslint/js";
 import globals from "globals";
-import { defineConfig } from "eslint/config";
+import jest from "eslint-plugin-jest";
 
-export default defineConfig([
+export default [
   {
-    files: ["**/*.{js,mjs,cjs}"],
-    plugins: {
-      js,
-    },
-    // Use the recommended rules as a base.
-    extends: ["js/recommended"],
+    files: ["**/*.js"],
     languageOptions: {
-      // Define the global variables available in the environment.
+      ecmaVersion: "latest", 
+      sourceType: "module", 
       globals: {
-        ...globals.browser, // For browser environments
-        ...globals.node,    // For Node.js environments (like server.js)
+        ...globals.node, 
       },
     },
-    // The problematic 'rules' section has been removed.
-    // The 'no-unused-vars' error is now handled directly in server.js
-    // with an 'eslint-disable-next-line' comment for reliability.
+    rules: {
+      ...js.configs.recommended.rules, 
+    },
   },
-]);
+  {
+    files: ["**/*.test.js"], 
+    ...jest.configs['flat/recommended'],
+    rules: {
+      ...jest.configs['flat/recommended'].rules,
+    },
+  },
+];

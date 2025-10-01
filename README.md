@@ -1,7 +1,7 @@
 ![HTTP Socket Appointment Scheduler](assets/banner.png)
 
 # HTTP Socket Appointment Scheduler
-![Badge Concluído](https://img.shields.io/static/v1?label=STATUS&message=In%Progress&color=af0421&style=for-the-badge)
+![Badge Concluído](https://img.shields.io/static/v1?label=STATUS&message=Completed&color=af0421&style=for-the-badge)
 
 This is an academic project developed for the **Plataformas de Distribuição UFPE, 2025.2** course, taught by Professor **Nelson Souto Rosa**. The objective was to adjust in a client-server application in Node.js to manage a real-time appointment schedule using **HTTP Protocol**, instead of TCP.
 

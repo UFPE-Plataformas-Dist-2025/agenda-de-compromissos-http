@@ -29,7 +29,7 @@ rl.setPrompt('\n> ');
 
 // --- Helper Functions for Commands ---
 function displaySuccess(response, showTable = false) {
-    console.log(`\n✅ ${response.data.mensagem || 'Operation carried out successfully!'}`);
+    console.log(`\n ${response.data.mensagem || 'Operation carried out successfully!'}`);
     if (showTable && response.data.dados) {
         let dataToDisplay = Array.isArray(response.data.dados) ? response.data.dados : [response.data.dados];
 
