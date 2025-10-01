@@ -50,10 +50,16 @@ app.get('/appointments', (req, res) => {
 
 // POST /appointments - Adicionar novo agendamento
 app.post('/appointments', (req, res) => {
-    const { date, time, duration, title, description } = req.body;
+    // CORREÇÃO: Remova 'description' desta linha
+    const { date, time, duration, title } = req.body;
+
+    // A validação continua a mesma
     if (!date || !time || !duration || !title) {
         return res.status(400).json({ message: "Campos obrigatórios ausentes." });
     }
+
+    // O restante da função permanece igual. O 'description' (se existir)
+    // será adicionado normalmente pelo spread operator (...req.body).
     const newAppointment = { id: nextAppointmentId++, ...req.body };
     appointments.push(newAppointment);
     saveAppointmentsToFile();
