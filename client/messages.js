@@ -1,13 +1,13 @@
 export function showConnectionAnimation(onComplete) {
   console.clear();
   const artLines = [
-    '+--------------------------------------------------+',
-    '|                                                   |',
-    '|           [~] Initializing SOCKET-TCP...          |', 
-    '|           [V] Connection Established.             |', 
-    '|           [>] Listening for commands...           |', 
-    '|                                                   |',
-    '+--------------------------------------------------+',
+    '+-----------------------------------------------------+',
+    '|                                                     |',
+    '|           [~] Initializing HTTP Cliente...          |', 
+    '|           [V] Client Ready.                         |', 
+    '|           [>] Listening for commands...             |', 
+    '|                                                     |',
+    '+-----------------------------------------------------+',
     ''
   ];
 
@@ -33,11 +33,11 @@ export function showWelcomeMessage() {
   console.log(" Teacher: Nelson Souto (nsr@cin.ufpe.br)");
   console.log(" Authors: Samara Silvia (sssc@cin.ufpe.br)");
   console.log("          Rodolfo Marinho (armc2@cin.ufpe.br)");
-  console.log("\n Title: TCP Socket Appointment Scheduler v1.0");
+  console.log("\n Title: HTTP API Appointment Scheduler v1.0");
   console.log("\n Description:");
   console.log("   This is a command-line interface (CLI) application that acts as a");
   console.log("   client for a shared scheduling system. It communicates with a");
-  console.log("   server via TCP Sockets to manage real-time events.");
+  console.log("   server via HTTP API to manage real-time events.");
   console.log("\n Available commands:");
   console.log("   - HELP         (See the full list of commands and their formats)");
   console.log("   - CLEAR        (Clear the terminal screen)");
@@ -61,8 +61,8 @@ export function showGoodbyeScreen() {
   console.clear();
   console.log("+--------------------------------------------------+");
   console.log("|                                                  |");
-  console.log("|             [!] Disconnecting...                 |");
-  console.log("|           [V] Session Terminated.                |");
+  console.log("|             [!] Exiting application...           |");
+  console.log("|           [V] Client closed.                     |");
   console.log("|                 See you soon!                    |");
   console.log("|                                                  |");
   console.log("+--------------------------------------------------+");
