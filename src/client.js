@@ -88,10 +88,14 @@ rl.on('line', async (line) => {
     } catch (error) {
         if (error.code === 'ECONNABORTED') {
             console.error('\n❌ Error: The server took too long to respond (timeout).');
+
         } else if (error.response) {
-            console.error(`\n❌ API error (${error.response.status}): ${error.response.data.mensagem}`);
+            const status = error.response.status;
+            const message = error.response.data.mensagem || 'The server returned an unexpected error response.';
+            console.error(`\n❌ API Error (${status}): ${message}`);
+
         } else {
-            console.error('\n❌ Connection error: Unable to connect to the server.');
+            console.error('\n❌ Connection error: Could not connect to the server. Please check if the server is online.');
         }
     }
 
