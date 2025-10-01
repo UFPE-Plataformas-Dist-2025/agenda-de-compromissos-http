@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "main": "src/client.js",
   "type": "module", 
-  "scripts": {
+ "scripts": {
     "start:server": "node src/server/api.js",
     "start:client": "node src/client/client.js",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest --config jest.config.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest --config jest.config.js",
+    "test:offline": "node --experimental-vm-modules node_modules/jest/bin/jest --config jest.config.js src/test/resilience/resilience.offline.test.js",
+    "test:online": "node --experimental-vm-modules node_modules/jest/bin/jest --config jest.config.js src/test/resilience/resilience.online.test.js src/test/concurrency/concurrency.test.js"
   },
   "repository": "https://bitbucket.org/ufpe-plataformas-dist-2025/pd-03-agenda-http.git",
   "contributors": [

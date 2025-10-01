@@ -22,10 +22,10 @@ Appointment data is persisted to an `appointments.json` file on the server-side,
 - **CRUD Operations via API**: Clients perform the four basic data operations through standard HTTP methods:
     - **C**reate (POST /appointments)
     - **R**ead (GET /appointments)
-    - **U**pdate (PUT /appointments/:id)
+    - **U**pdate (PATCH /appointments/:id)
     - **D**elete (DELETE /appointments/:id)
 - **Data Persistence**: The schedule is saved to a JSON file on the server.
-- **Interactive Command-Line Interface**: TThe client, powered by Axios, provides an interactive prompt for communicating with the API.
+- **Interactive Command-Line Interface**: The client, powered by Axios, provides an interactive prompt for communicating with the API.
 
 ## Architectural Shift: The HTTP Request-Response Model
 
@@ -60,14 +60,14 @@ This results in a more robust, predictable, and easily debuggable system.
 3.  **Start the Server**
     Open a terminal and run the following command. The server will start the API on port 3000.
     ```sh
-    node src/server/api.js
+    yarn start:server
     ```
     You will see a confirmation message: `[INFO] HTTP Scheduler API started and listening on http://localhost:3000`.
 
 4.  **Start the Client**
     Open a **new** terminal (leave the server terminal running) and run the command below.
     ```sh
-    node src/client/client.js
+    yarn start:client
     ```
     After connecting, a `>` prompt will appear, ready to receive your commands.
 
@@ -79,51 +79,41 @@ All commands must be entered into the client terminal. Arguments containing spac
 | :--- | :--- | :--- |
 | `ADD` | Adds a new appointment to the schedule via `POST /appointments`. | **Format:**<br>`ADD <date> <time> <duration_min> "<title>" "[optional_description]"`<br><br>**Example:**<br>```> ADD 2025-10-26 15:00 90 "Project Sync" "Discuss milestones"``` |
 | `LIST` | Lists all appointments `LIST ALL` or filters by a specific date via `GET /appointments`. | **Format:**<br>`LIST` or `LIST <date>`<br><br>**Example:**<br>```> LIST\n> LIST 2025-10-26``` |
-| `UPDATE` | Updates a specific field of an existing appointment via `PUT /appointments/:id`. <br><br>**Updatable fields:**<br>`date`, `time`, `duration`, `title`, `description`. | **Format:**<br>`UPDATE <id> <field> "<new_value>"`<br><br>**Example:**<br>```> UPDATE 1 title "General Project Sync Meeting"``` |
+| `UPDATE` | Updates a specific field of an existing appointment via `PATCH /appointments/:id`. <br><br>**Updatable fields:**<br>`date`, `time`, `duration`, `title`, `description`. | **Format:**<br>`UPDATE <id> <field> "<new_value>"`<br><br>**Example:**<br>```> UPDATE 1 title "General Project Sync Meeting"``` |
 | `DELETE` | Removes an appointment from the schedule via `DELETE /appointments/:id` | **Format:**<br>`DELETE <id>`<br><br>**Example:**<br>```> DELETE 2``` |
 
-## Concurrency & Resilience Testing
+## Automated Testing (Jest)
 
-To validate the API's ability to handle multiple simultaneous clients and ensure the client's error handling is robust, the project uses Jest for automated integration testing.
-
-These tests simulate various real-world scenarios, making concurrent requests to the live server to verify its performance and stability under pressure. API tools like Postman can also be used for manual, granular testing of each endpoint.
+To validate the API's stability and the client's error handling, the project uses an automated test suite built with Jest.
 
 ### How to Run the Tests
 
-The test suite is designed to be run against a live server instance.
+Because the resilience tests have conflicting requirements (server online vs. offline), the test suite is divided into two separate commands. After running, a detailed test-report.html file is generated in the project root.
 
-1.  **Ensure the Server is Running**
-    In one terminal, start the API server:
+1. **Testing the Offline Scenario**
+    This command runs only the tests that require the server to be offline.
     ```sh
-    node src/server/server.js
+    yarn test:offline
     ```
-
-2.  **Execute the Test Suite**
-    In a new terminal, run the test command from the project's root directory:
+2. **Testing Online Scenarios**
+    This command runs all tests that require the server to be online (resilience timeout and concurrency). The server is started and stopped automatically for these tests.
     ```sh
-    yarn test
+    yarn test:online
     ```
-
-Jest will automatically discover and run all test files. Upon completion, a final report will be displayed in the terminal, summarizing the number of passed and failed tests.
 
 ### Test Scenarios Explained
 
-The suite executes 30 tests distributed across three distinct scenarios, each designed to validate a specific aspect of the system.
+The suite executes a series of tests distributed across two main categories:em.
 
-#### Scenario 1: Stable Server & Normal Load
-* **Goal:** To verify that the API can correctly handle standard CRUD operations from multiple concurrent users without data corruption or errors.
-* **Execution:** Multiple simulated users connect at the same time. Each user performs a sequence of `ADD`, `LIST`, `UPDATE`, and `DELETE` commands.
-* **Expected Outcome:** All operations must be processed correctly by the API, returning `2xx` status codes, and all tests should pass.
+#### Resilience Testsd
+The goal is to verify the client's robustness during server failures.
+- **Server Offline Scenario:** Validates that the client correctly handles an immediate connection error (ECONNREFUSED) when the server is unavailable from the start. This test is run with the server off.
+- **Server Timeout Scenario:** Validates that the client's request timeout (ECONNABORTED) is triggered when the server is online but unresponsive. This test is run with the server on and managed automatically.
 
-#### Scenario 2: Server Crash Simulation
-* **Goal:** To test the client's resilience and *error handling* when the server fails unexpectedly during operations.
-* **Execution:** The test server is programmed to shut down after receiving a few requests. Immediately, multiple users attempt to send more requests.
-* **Expected Outcome:** The first few requests will succeed. All subsequent requests must result in a network connection error (e.g., `ECONNREFUSED`). A test is successful if the client correctly catches this error and provides user feedback without crashing.
-
-#### Scenario 3: Server Offline Simulation
-* **Goal:** To validate the client's *initial connection error handling* when the server is unavailable from the start.
-* **Execution:** Multiple users attempt to send requests, but the server process is never started.
-* **Expected Outcome:** Every request from every client must fail immediately with a network connection error. A test is successful if the client correctly handles this initial error.
+#### Concurrency Test
+The goal is to ensure the server can handle multiple simultaneous write operations without data corruption.
+- **Execution:** The test simulates multiple clients by sending a burst of `ADD` (`POST`) requests concurrently using Promise.all.
+- **Expected Outcome:** After the requests complete, the test verifies that all appointments were created correctly and that each one has a unique ID, proving the server's stability and data integrity under load.
 
 <br>
 <div style="text-align: center; font-family: monospace; white-space: pre;">

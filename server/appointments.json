@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "createdAt": "2025-10-01T20:49:43.179Z",
+    "date": "2025-11-11",
+    "time": "10:00",
+    "duration": 10,
+    "title": "Initial Appointment 1"
+  },
+  {
+    "id": 2,
+    "createdAt": "2025-10-01T20:49:43.182Z",
+    "date": "2025-11-11",
+    "time": "10:00",
+    "duration": 10,
+    "title": "--- TITLE UPDATED ---"
+  },
+  {
+    "id": 3,
+    "createdAt": "2025-10-01T20:49:43.184Z",
+    "date": "2025-11-11",
+    "time": "10:00",
+    "duration": 999,
+    "title": "Initial Appointment 3"
+  },
+  {
+    "id": 4,
+    "createdAt": "2025-10-01T20:49:43.185Z",
+    "date": "2025-11-11",
+    "time": "10:00",
+    "duration": 10,
+    "title": "Initial Appointment 4"
+  },
+  {
+    "id": 6,
+    "createdAt": "2025-10-01T20:49:43.192Z",
+    "date": "2025-11-11",
+    "time": "11:00",
+    "duration": 15,
+    "title": "Concurrent Add 1"
+  },
+  {
+    "id": 7,
+    "createdAt": "2025-10-01T20:49:43.194Z",
+    "date": "2025-11-11",
+    "time": "12:00",
+    "duration": 15,
+    "title": "Concurrent Add 2"
+  }
+]

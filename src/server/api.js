@@ -60,6 +60,10 @@ function loadAppointmentsFromFile() {
 
 function saveAppointmentsToFile() {
     try {
+        const dir = path.dirname(DATA_FILE);
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
         fs.writeFileSync(DATA_FILE, JSON.stringify(appointments, null, 2));
         console.log(`[INFO] Appointments saved to ${DATA_FILE}`);
     } catch (err) {
@@ -100,6 +104,14 @@ app.post('/appointments', (req, res) => {
     saveAppointmentsToFile();
     console.log('[INFO] New appointment added:', newAppointment);
     sendResponse(res, 'SUCCESS', newAppointment, '[✅ DEBUG] Appointment added successfully.', 201);
+});
+
+app.post('/testing/reset', (req, res) => {
+    appointments = [];
+    nextAppointmentId = 1;
+    saveAppointmentsToFile();
+    console.log('[INFO] Database has been reset for testing.');
+    res.status(200).send({ message: 'Database reset.' });
 });
 
 app.patch('/appointments/:id', (req, res) => {
