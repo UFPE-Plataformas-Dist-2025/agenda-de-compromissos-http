@@ -3,7 +3,7 @@ export function showConnectionAnimation(onComplete) {
   const artLines = [
     '+-----------------------------------------------------+',
     '|                                                     |',
-    '|           [~] Initializing HTTP Cliente...          |', 
+    '|           [~] Initializing HTTP Client...           |', 
     '|           [V] Client Ready.                         |', 
     '|           [>] Listening for commands...             |', 
     '|                                                     |',
@@ -57,8 +57,28 @@ export function showCommandTutorial() {
   console.log("------------------------------------------------");
 }
 
+export function displaySessionReport(stats) {
+  console.log("\n\n---------- SESSION REPORT ----------");
+  console.log(`\nTotal Commands Executed: ${stats.totalCommands}\n`);
+
+  const successData = [
+    { 'Successful Operation': 'Appointments Added',   Count: stats.successful.ADD },
+    { 'Successful Operation': 'Appointments Updated', Count: stats.successful.UPDATE },
+    { 'Successful Operation': 'Appointments Deleted', Count: stats.successful.DELETE },
+    { 'Successful Operation': 'Appointments Listed',  Count: stats.successful.LIST },
+  ];
+
+  const errorData = [
+    { ErrorType: 'Invalid Format (User)', Count: stats.errors.user },
+    { ErrorType: 'API Errors (Server)',   Count: stats.errors.api },
+    { ErrorType: 'Connection Errors',     Count: stats.errors.connection },
+  ];
+
+  console.table(successData);
+  console.table(errorData);
+}
+
 export function showGoodbyeScreen() {
-  console.clear();
   console.log("+--------------------------------------------------+");
   console.log("|                                                  |");
   console.log("|             [!] Exiting application...           |");
