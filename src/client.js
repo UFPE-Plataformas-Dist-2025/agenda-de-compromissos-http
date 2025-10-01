@@ -1,13 +1,11 @@
-import axios from 'axios';
+
 import { createInterface } from 'readline';
 import { processUserInput } from './commandHandler.js';
 import { handleError } from './errorHandler.js';
 import { showConnectionAnimation, showWelcomeMessage, showCommandTutorial, showGoodbyeScreen } from './messages.js';
 
 // --- Configuration ---
-const API_URL = 'http://localhost:3000';
-const HOST = '127.0.0.1'; 
-const PORT = 3000; 
+
 
 // --- Initialization ---
 const rl = createInterface({ input: process.stdin, output: process.stdout });
